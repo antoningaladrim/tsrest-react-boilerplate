@@ -1,11 +1,11 @@
 {
-  "name": "@tsrest-react-boilerplate/source",
+  "name": "tsrest-react-boilerplate",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "nx run-many --target=lint --all",
-    "test": "nx run-many --target=test --all",
-    "build": "nx run-many --target=build --all",
+    "lint": "nx affected --target=lint",
+    "test": "nx affected --target=test",
+    "build": "nx affected --target=build",
     "dev-front": "nx run client:serve",
     "dev-server": "nx run server:serve",
     "prepare": "husky"
