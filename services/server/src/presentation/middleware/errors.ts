@@ -1,7 +1,14 @@
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { HttpError } from '../errors/HttpError';
 import { NotFoundError } from '../errors/common';
-import { response } from '../response.js';
+
+
+const formatError = (error: HttpError | Error) => {
+  const errMessage =
+    error.name === 'ZodError' ? JSON.parse(error.message) : error.message;
+
+  return { error: { name: error?.name, message: errMessage } };
+};
 
 /**
  * @see https://fastify.dev/docs/latest/Reference/Server/#seterrorhandler
@@ -11,16 +18,13 @@ export const globalErrorHandler = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  if (
-    process.env.NODE_ENV !== 'production' 
-    // process.env.NODE_ENV !== 'test'
-  ) {
+  if (process.env.NODE_ENV !== 'production') {
     console.error(`Timestamp: ${new Date().toISOString()}`);
     console.error('Error:', error);
   }
 
   const responseStatus = error instanceof HttpError ? error.status : 500;
-  return reply.status(responseStatus).send(response(undefined, error));
+  return reply.status(responseStatus).send(formatError(error));
 };
 
 // Middleware for handling requests that don't match any available router
