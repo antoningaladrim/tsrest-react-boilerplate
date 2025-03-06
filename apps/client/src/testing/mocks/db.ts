@@ -5,7 +5,6 @@ const models = {
   user: {
     id: primaryKey(nanoid),
     username: String,
-    email: String,
     password: String,
     createdAt: Date.now,
   }

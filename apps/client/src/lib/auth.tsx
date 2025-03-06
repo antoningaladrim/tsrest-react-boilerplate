@@ -1,12 +1,7 @@
 import { paths } from '@/config/paths';
-import type {
-  LoginPayload,
-  LoginResponse,
-  User,
-} from '@tsrest-react-boilerplate/api';
+import type { LoginPayload, User } from '@tsrest-react-boilerplate/api';
 import { configureAuth } from 'react-query-auth';
 import { Navigate, useLocation } from 'react-router';
-import { z } from 'zod';
 
 import { tsr } from './api-client';
 
@@ -31,14 +26,7 @@ const logout = async (): Promise<void> => {
   }
 };
 
-export const loginInputSchema = z.object({
-  email: z.string().min(1, 'Required').email('Invalid email'),
-  password: z.string().min(5, 'Required'),
-});
-
-const loginWithEmailAndPassword = async (
-  body: LoginPayload
-): Promise<LoginResponse> => {
+const login = async (body: LoginPayload): Promise<User> => {
   const response = await tsr.auth.login.mutate({ body });
 
   if (response.status !== 200) {
@@ -50,10 +38,7 @@ const loginWithEmailAndPassword = async (
 
 const authConfig = {
   userFn: getUser,
-  loginFn: async (data: LoginPayload) => {
-    const response = await loginWithEmailAndPassword(data);
-    return response.user;
-  },
+  loginFn: async (data: LoginPayload) => await login(data),
   registerFn: () => {
     throw new Error('Registering is not implemented');
   },

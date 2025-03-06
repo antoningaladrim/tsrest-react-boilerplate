@@ -5,7 +5,6 @@ import { paths } from '@/config/paths';
 import { LoginForm } from '@/features/auth/components/login-form';
 
 const LoginRoute = () => {
-  console.log('login');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get('redirectTo');
