@@ -1,5 +1,5 @@
-import app from './app';
 import cors from '@fastify/cors';
+import app from './app';
 
 const start = async () => {
   try {

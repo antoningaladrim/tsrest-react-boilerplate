@@ -4,6 +4,7 @@ import { useLogin } from '@/lib/auth';
 import { cn } from '@/utils/cn';
 import { LoginPayload } from '@tsrest-react-boilerplate/api';
 import { Controller, useForm } from 'react-hook-form';
+import { Link } from 'react-router';
 
 type LoginFormProps = {
   onSuccess: () => void;
@@ -42,6 +43,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
           )}
         />
       </div>
+      <Link to="/">Do not have an account?</Link>
       <Button onClick={handleSubmit(onSubmit)}>Log in</Button>
     </div>
   );
