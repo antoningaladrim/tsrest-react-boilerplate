@@ -30,6 +30,13 @@ export const addAuthRouter = async (app: FastifyInstance) => {
         body: res,
       };
     },
+    register: async ({ body }) => {
+      const res = await authController.register(body);
+      return {
+        status: 200,
+        body: res,
+      };
+    },
   });
 
   s.registerRouter(authRestApiContract, router, app, {
