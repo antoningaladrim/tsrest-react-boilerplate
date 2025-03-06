@@ -12,6 +12,8 @@
   },
   "private": true,
   "dependencies": {
+    "@clerk/clerk-react": "^5.24.1",
+    "@clerk/fastify": "^2.1.24",
     "@fastify/autoload": "~6.0.3",
     "@fastify/cors": "^11.0.0",
     "@fastify/express": "^4.0.2",
