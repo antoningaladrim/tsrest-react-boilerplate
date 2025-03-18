@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 
 import { Head } from '@/components/seo';
 import { paths } from '@/config/paths';
-import { useUser } from '@/lib/auth';
+import { useAuth } from '@clerk/clerk-react';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -12,19 +12,19 @@ type LayoutProps = {
 };
 
 export const AuthLayout = ({ children, title }: LayoutProps) => {
-  const { data: user } = useUser();
+  const { isSignedIn } = useAuth();
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get('redirectTo');
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
+    if (isSignedIn) {
       navigate(redirectTo ? redirectTo : paths.app.root.getHref(), {
         replace: true,
       });
     }
-  }, [user, navigate, redirectTo]);
+  }, [isSignedIn, navigate, redirectTo]);
 
   return (
     <>

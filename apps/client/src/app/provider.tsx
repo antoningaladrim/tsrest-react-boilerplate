@@ -6,10 +6,10 @@ import { HelmetProvider } from 'react-helmet-async';
 
 import { MainErrorFallback } from '@/components/errors/main';
 import { Spinner } from '@/components/ui/spinner';
+import { env } from '@/config/env';
 import { tsr } from '@/lib/api-client';
-import { AuthLoader } from '@/lib/auth';
 import { queryConfig } from '@/lib/react-query';
-import { Toaster } from 'react-hot-toast';
+import { ClerkProvider } from '@clerk/clerk-react';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -32,23 +32,19 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }
     >
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
-        <HelmetProvider>
-          <QueryClientProvider client={queryClient}>
-            <tsr.ReactQueryProvider>
-              {import.meta.env.DEV && <ReactQueryDevtools />}
-              <Toaster />
-              <AuthLoader
-                renderLoading={() => (
-                  <div className="flex h-screen w-screen items-center justify-center">
-                    <Spinner />
-                  </div>
-                )}
-              >
+        <ClerkProvider
+          publishableKey={env.CLERK_PUBLISHABLE_KEY}
+          afterSignOutUrl="/"
+        >
+          <HelmetProvider>
+            <QueryClientProvider client={queryClient}>
+              <tsr.ReactQueryProvider>
+                {import.meta.env.DEV && <ReactQueryDevtools />}
                 {children}
-              </AuthLoader>
-            </tsr.ReactQueryProvider>
-          </QueryClientProvider>
-        </HelmetProvider>
+              </tsr.ReactQueryProvider>
+            </QueryClientProvider>
+          </HelmetProvider>
+        </ClerkProvider>
       </ErrorBoundary>
     </React.Suspense>
   );

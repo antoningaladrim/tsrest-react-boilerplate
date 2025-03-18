@@ -1,18 +1,20 @@
+import { clerkPlugin } from '@clerk/fastify';
 import Fastify from 'fastify';
-import { addAuthRouter } from './presentation';
 import {
   globalErrorHandler,
+  protectedRouteHandler,
   routeNotFoundHandler,
-} from './presentation/middleware/errors';
+} from './presentation/middleware';
 
 const app = Fastify();
+
+app.register(clerkPlugin);
 
 app.get('/healthz', (_, res) => {
   res.send({ status: 'ok' });
 });
 
-addAuthRouter(app);
-
+app.addHook('preHandler', protectedRouteHandler);
 app.setNotFoundHandler(routeNotFoundHandler);
 app.setErrorHandler(globalErrorHandler);
 

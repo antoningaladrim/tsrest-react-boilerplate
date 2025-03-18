@@ -1,14 +1,18 @@
 import { Button } from '@/components/ui/button';
-import { tsr } from '@/lib/api-client';
+import { paths } from '@/config/paths';
+import { useClerk } from '@clerk/clerk-react';
 
 export const Home = () => {
-  const logout = async () => {
-    await tsr.auth.logout.mutate({ body: undefined });
+  const { signOut } = useClerk();
+
+  const onSignOut = () => {
+    signOut({ redirectUrl: paths.auth.login.getHref() });
   };
+
   return (
     <div>
       <p>Home</p>
-      <Button onClick={logout}>Logout</Button>
+      <Button onClick={onSignOut}>Logout</Button>
     </div>
   );
 };
