@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { paths } from '@/config/paths';
-import { ProtectedRoute } from '@/lib/auth';
 import { ErrorBoundary, Home } from './routes/app';
 import LoginRoute from './routes/auth/Login';
 import LandingRoute from './routes/Landing';
@@ -21,11 +20,7 @@ export const createAppRouter = (queryClient: QueryClient) =>
     },
     {
       path: paths.app.root.path,
-      element: (
-        <ProtectedRoute>
-          <Home />
-        </ProtectedRoute>
-      ),
+      element: <Home />,
       ErrorBoundary,
     },
     {

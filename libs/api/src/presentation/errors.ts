@@ -9,3 +9,8 @@ export const InternalServiceError = z.object({
   reason: z.string(),
   type: z.literal('InternalServiceError'),
 });
+
+export const BadRequestError = z.object({
+  reason: z.string(),
+  type: z.literal('BadRequestError'),
+});

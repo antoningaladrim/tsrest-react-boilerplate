@@ -3,7 +3,7 @@ import * as z from 'zod';
 const createEnv = () => {
   // Add your custom env variables here
   const EnvSchema = z.object({
-    YOUR_ENV_VARIABLE: z.string(),
+    CLERK_PUBLISHABLE_KEY: z.string(),
   });
 
   const envVars = Object.entries(import.meta.env).reduce<
@@ -16,19 +16,16 @@ const createEnv = () => {
     return acc;
   }, {});
 
-  const parsedEnv = EnvSchema.safeParse({
-    YOUR_ENV_VARIABLE: 'test',
-  });
-  // const parsedEnv = EnvSchema.safeParse(envVars);
+  const parsedEnv = EnvSchema.safeParse(envVars);
 
   if (!parsedEnv.success) {
     throw new Error(
       `Invalid env provided.
-The following variables are missing or invalid:
-${Object.entries(parsedEnv.error.flatten().fieldErrors)
-  .map(([k, v]) => `- ${k}: ${v}`)
-  .join('\n')}
-`,
+        The following variables are missing or invalid:
+        ${Object.entries(parsedEnv.error.flatten().fieldErrors)
+          .map(([k, v]) => `- ${k}: ${v}`)
+          .join('\n')}
+        `
     );
   }
 

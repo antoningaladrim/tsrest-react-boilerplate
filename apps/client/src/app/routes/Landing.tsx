@@ -4,14 +4,14 @@ import logo from '@/assets/logo.svg';
 import { Head } from '@/components/seo';
 import { Button } from '@/components/ui/button';
 import { paths } from '@/config/paths';
-import { useUser } from '@/lib/auth';
+import { useAuth } from '@clerk/clerk-react';
 
 const LandingRoute = () => {
   const navigate = useNavigate();
-  const user = useUser();
+  const { isSignedIn } = useAuth();
 
   const handleStart = () => {
-    if (user.data) {
+    if (isSignedIn) {
       navigate(paths.app.root.getHref());
     } else {
       navigate(paths.auth.login.getHref());
