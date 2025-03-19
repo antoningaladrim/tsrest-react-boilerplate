@@ -12,7 +12,6 @@ import { StorageClientService } from '../domain';
 export const zAwsConfig = z.object({
   region: z.string(),
 });
-
 export type AwsConfig = z.infer<typeof zAwsConfig>;
 
 export class AwsStorageClientService implements StorageClientService {

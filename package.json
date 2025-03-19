@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
+    "@aws-sdk/client-textract": "^3.758.0",
     "@aws-sdk/s3-request-presigner": "^3.758.0",
     "@clerk/clerk-js": "^5.56.0",
     "@clerk/clerk-react": "^5.24.1",
@@ -30,7 +31,9 @@
     "clsx": "^2.1.1",
     "fastify": "~5.2.1",
     "fastify-plugin": "~5.0.1",
+    "mammoth": "^1.9.0",
     "minio": "^8.0.5",
+    "pdf-to-png-converter": "^3.6.5",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-error-boundary": "^5.0.0",
