@@ -46,3 +46,6 @@ vitest.config.*.timestamp*
 
 # Environment
 .env
+
+# ollama models
+ollama

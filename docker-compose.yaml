@@ -2,11 +2,11 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
+      POSTGRES_USER: ${POSTGRES_DB_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
     ports:
-      - 5432:5432
+      - ${POSTGRES_DB_PORT}:5432
     volumes:
       - ./infra/db:/docker-entrypoint-initdb.d
     healthcheck:
@@ -32,6 +32,45 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - 7869:11434
+    volumes:
+      - .:/code
+      - ./ollama/ollama:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: always
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_HOST=0.0.0.0
+  
+  litellm:
+    build:
+      context: .
+      args:
+        target: runtime
+    image: ghcr.io/berriai/litellm:main-stable
+    volumes:
+     - ./infra/litellm/config.yaml:/app/config.yaml
+    command:
+     - "--config=/app/config.yaml"
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./infra/litellm/.env.development
+    depends_on:
+      - db
+      - ollama
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:4000/health/liveliness || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   minio:
     hostname: minio
