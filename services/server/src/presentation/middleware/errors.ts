@@ -1,7 +1,5 @@
+import { HttpError, NotFoundError } from '@tsrest-react-boilerplate/api-errors';
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import { HttpError } from '../errors/HttpError';
-import { NotFoundError } from '../errors/common';
-
 
 const formatError = (error: HttpError | Error) => {
   const errMessage =
