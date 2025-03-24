@@ -1,3 +1,2 @@
 pnpm lint
-pnpm test
-pnpm build
+pnpm nx format:check
