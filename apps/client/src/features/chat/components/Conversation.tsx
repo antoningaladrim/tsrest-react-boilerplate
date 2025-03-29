@@ -25,7 +25,7 @@ export const Conversation = ({
           )
         )
       )}
-      
+
       {isPendingResponse && (
         <div className="flex justify-start w-full">
           <Spinner />
