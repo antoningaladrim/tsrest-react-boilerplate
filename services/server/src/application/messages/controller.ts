@@ -17,7 +17,7 @@ export class MessagesController {
     const systemPrompt = {
       role: 'system' as const,
       content: this.nunjucks.render(
-        path.join('mentoring', 'systemPrompt.html') // Path in the build folder
+        path.join('messages', 'systemPrompt.html') // Path in the build folder
       ),
     };
 

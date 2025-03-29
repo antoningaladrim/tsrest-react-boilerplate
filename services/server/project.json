@@ -16,7 +16,14 @@
         "bundle": false,
         "main": "services/server/src/main.ts",
         "tsConfig": "services/server/tsconfig.app.json",
-        "assets": ["services/server/src/assets"],
+        "assets": [
+          "services/server/src/assets",
+          {
+            "input": "./services/server/src/application",
+            "glob": "**/*.html",
+            "output": "./services/server/src/prompts"
+          }
+        ],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
