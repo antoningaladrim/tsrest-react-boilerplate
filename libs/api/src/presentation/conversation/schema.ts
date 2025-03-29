@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const zMessage = z.object({
+export const zPrompt = z.object({
   role: z.enum(['user', 'assistant', 'system']),
   content: z.string(),
 });
@@ -8,12 +8,12 @@ export const zMessage = z.object({
 export const zConversation = z.object({
   id: z.string().uuid(),
   description: z.string().optional(),
-  messages: zMessage.array().readonly(),
+  prompts: zPrompt.array().readonly(),
 });
 
 export const zCompletionPayload = z.object({
   model: z.string(),
-  message: zMessage,
+  prompt: zPrompt,
   conversationId: z.string().uuid().nullable(),
 });
 
@@ -23,12 +23,12 @@ export const zCompletionResponse = z.object({
 
 export const zFindAllConversationsResponseBody = zConversation
   .omit({
-    messages: true,
+    prompts: true,
   })
   .array()
   .readonly();
 
 export type Conversation = z.infer<typeof zConversation>;
-export type ChatCompletionMessage = z.infer<typeof zMessage>;
+export type Prompt = z.infer<typeof zPrompt>;
 export type ChatCompletionPayload = z.infer<typeof zCompletionPayload>;
 export type CompletionResponse = z.infer<typeof zCompletionResponse>;

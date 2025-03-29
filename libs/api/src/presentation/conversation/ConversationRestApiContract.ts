@@ -36,9 +36,9 @@ export const ConversationRestApiContract = c.router(
       },
       summary: 'Find a conversation by id',
     },
-    sendMessage: {
+    prompt: {
       method: 'POST',
-      path: '/send-message',
+      path: '/prompt',
       responses: {
         201: zCompletionResponse,
         401: UnauthorizedError,
@@ -47,7 +47,7 @@ export const ConversationRestApiContract = c.router(
       },
       body: zCompletionPayload,
       summary:
-        'Send a message in a conversation. If conversationId is null, the conversation will be created',
+        'Send a prompt in a conversation. If conversationId is null, the conversation will be created',
     },
   },
   {

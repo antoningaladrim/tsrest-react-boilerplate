@@ -1,12 +1,12 @@
 import { initServer } from '@ts-rest/fastify';
 import { ConversationRestApiContract } from '@tsrest-react-boilerplate/api';
 import { FastifyInstance } from 'fastify';
-import { getMessagesControllerLive } from '../../../live';
+import { getConversationControllerLive } from '../../../live';
 
 export const addConversationRouter = async (app: FastifyInstance) => {
   const s = initServer();
 
-  const conversationController = getMessagesControllerLive();
+  const conversationController = getConversationControllerLive();
 
   const router = s.router(ConversationRestApiContract, {
     findAll: async () => {
@@ -27,8 +27,8 @@ export const addConversationRouter = async (app: FastifyInstance) => {
         body: responseBody,
       };
     },
-    sendMessage: async ({ body }) => {
-      const responseBody = await conversationController.sendMessage(body);
+    prompt: async ({ body }) => {
+      const responseBody = await conversationController.prompt(body);
 
       return {
         status: 201,

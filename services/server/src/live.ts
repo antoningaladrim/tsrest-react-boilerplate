@@ -4,7 +4,7 @@ import path from 'path';
 import { ConversationController } from './application';
 import { getConversationRepositoryLive } from './repositoriesLive';
 
-export const getMessagesControllerLive = () => {
+export const getConversationControllerLive = () => {
   const CompletionService = getCompletionClientLive();
 
   const env = new Environment(

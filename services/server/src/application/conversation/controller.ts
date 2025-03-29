@@ -1,7 +1,7 @@
 import {
-  ChatCompletionMessage,
   ChatCompletionPayload,
   CompletionResponse,
+  Prompt,
 } from '@tsrest-react-boilerplate/api';
 import { NotFoundError } from '@tsrest-react-boilerplate/api-errors';
 import { CompletionService } from '@tsrest-react-boilerplate/completion-client';
@@ -30,13 +30,7 @@ export class ConversationController {
     return conversation;
   }
 
-  async inferDescription({
-    model,
-    prompt,
-  }: {
-    model: string;
-    prompt: ChatCompletionMessage;
-  }) {
+  async inferDescription({ model, prompt }: { model: string; prompt: Prompt }) {
     const systemPrompt = {
       role: 'system' as const,
       content: this.nunjucks.render(
@@ -46,7 +40,7 @@ export class ConversationController {
 
     return this.completionService.complete({
       model,
-      messages: [systemPrompt, prompt],
+      prompts: [systemPrompt, prompt],
     });
   }
 
@@ -55,7 +49,7 @@ export class ConversationController {
     prompt,
   }: {
     model: string;
-    prompt: ChatCompletionMessage;
+    prompt: Prompt;
   }) {
     const systemPrompt = {
       role: 'system' as const,
@@ -64,7 +58,7 @@ export class ConversationController {
 
     const completionPromise = this.completionService.complete({
       model,
-      messages: [systemPrompt, prompt],
+      prompts: [systemPrompt, prompt],
     });
 
     const descriptionPromise = this.inferDescription({
@@ -81,34 +75,34 @@ export class ConversationController {
     await this.conversationRepository.store({
       id: conversationId,
       description: description.content,
-      messages: [systemPrompt, prompt, llmResponse],
+      prompts: [systemPrompt, prompt, llmResponse],
     });
 
     return { conversationId };
   }
 
-  async sendMessage({
-    message,
+  async prompt({
+    prompt,
     model,
     conversationId,
   }: ChatCompletionPayload): Promise<CompletionResponse> {
     if (conversationId === null) {
       return this.createFromPromptAndComplete({
         model,
-        prompt: message,
+        prompt,
       });
     }
 
     const conversation = await this.findById(conversationId);
 
     const llmResponse = await this.completionService.complete({
-      messages: [...conversation.messages, message],
+      prompts: [...conversation.prompts, prompt],
       model,
     });
 
     await this.conversationRepository.store({
       ...conversation,
-      messages: [...conversation.messages, message, llmResponse],
+      prompts: [...conversation.prompts, prompt, llmResponse],
     });
 
     return { conversationId: conversation.id };

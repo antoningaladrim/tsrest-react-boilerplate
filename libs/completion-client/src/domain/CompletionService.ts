@@ -1,8 +1,5 @@
-import { ChatCompletionMessage } from '@tsrest-react-boilerplate/api';
+import { Prompt } from '@tsrest-react-boilerplate/api';
 
 export interface CompletionService {
-  complete(props: {
-    messages: ChatCompletionMessage[];
-    model: string;
-  }): Promise<ChatCompletionMessage>;
+  complete(props: { prompts: Prompt[]; model: string }): Promise<Prompt>;
 }

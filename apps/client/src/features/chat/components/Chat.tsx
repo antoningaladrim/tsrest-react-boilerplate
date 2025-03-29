@@ -4,10 +4,10 @@ import { paths } from '@/config/paths';
 import { tsr } from '@/lib/apiClient';
 import { queryKeys } from '@/lib/queryKeys';
 import { useQueryClient } from '@tanstack/react-query';
-import { ChatCompletionMessage } from '@tsrest-react-boilerplate/api';
+import { Prompt } from '@tsrest-react-boilerplate/api';
 import { useNavigate, useParams } from 'react-router';
 import { Conversation } from './Conversation';
-import { MessageInput } from './MessageInput';
+import { PromptInput } from './PromptInput';
 
 const MODEL = 'llama3.2';
 
@@ -31,13 +31,13 @@ export const Chat = () => {
     mutateAsync: askMentor,
     error,
     isPending,
-  } = tsr.conversation.sendMessage.useMutation();
+  } = tsr.conversation.prompt.useMutation();
 
-  const onSendChat = async (userMessage: ChatCompletionMessage) => {
+  const onPrompt = async (userPrompt: Prompt) => {
     await askMentor(
       {
         body: {
-          message: userMessage,
+          prompt: userPrompt,
           model: MODEL,
           conversationId: conversationId ?? null,
         },
@@ -62,10 +62,10 @@ export const Chat = () => {
 
   return (
     <section className="w-full h-full flex flex-col overflow-y-scroll items-center max-w-6xl mx-auto p-6 pt-10">
-      {conversation?.body && conversation.body.messages.length > 0 ? (
+      {conversation?.body && conversation.body.prompts.length > 0 ? (
         <Conversation
           description={conversation.body.description}
-          messages={conversation.body.messages}
+          prompts={conversation.body.prompts}
           isPendingResponse={isPending}
         />
       ) : (
@@ -79,7 +79,7 @@ export const Chat = () => {
         className="-top-40 left-0 md:-top-20 md:left-60"
         fill="white"
       />
-      <MessageInput onSendChat={onSendChat} disabled={isPending} />
+      <PromptInput onPrompt={onPrompt} disabled={isPending} />
 
       {error && <div>{(error as Error).message}</div>}
     </section>

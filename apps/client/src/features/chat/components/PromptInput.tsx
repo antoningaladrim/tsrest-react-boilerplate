@@ -1,11 +1,11 @@
-import { ChatCompletionMessage } from '@tsrest-react-boilerplate/api';
+import { Prompt } from '@tsrest-react-boilerplate/api';
 import { ChangeEvent, useState } from 'react';
 
-export const MessageInput = ({
-  onSendChat,
+export const PromptInput = ({
+  onPrompt,
   disabled,
 }: {
-  onSendChat: (message: ChatCompletionMessage) => Promise<void>;
+  onPrompt: (message: Prompt) => Promise<void>;
   disabled: boolean;
 }) => {
   const [input, setInput] = useState('');
@@ -17,13 +17,12 @@ export const MessageInput = ({
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setInput('');
-    onSendChat({ role: 'user', content: input });
+    onPrompt({ role: 'user', content: input });
   };
 
   return (
     <form onSubmit={onSubmit} className="w-full mt-4">
       <input
-        name="prompt"
         value={input}
         onChange={onInputChange}
         placeholder="Ask a question"

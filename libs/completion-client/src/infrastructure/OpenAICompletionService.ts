@@ -1,4 +1,4 @@
-import { ChatCompletionMessage } from '@tsrest-react-boilerplate/api';
+import { Prompt } from '@tsrest-react-boilerplate/api';
 import { InternalServerError } from '@tsrest-react-boilerplate/api-errors';
 import OpenAI from 'openai';
 import { CompletionService } from '../domain';
@@ -11,14 +11,14 @@ export class OpenAICompletionService implements CompletionService {
   }
 
   complete = async ({
-    messages,
+    prompts,
     model,
   }: {
-    messages: ChatCompletionMessage[];
+    prompts: Prompt[];
     model: string;
-  }): Promise<ChatCompletionMessage> => {
+  }): Promise<Prompt> => {
     const chatCompletion = await this.client.chat.completions.create({
-      messages,
+      messages: prompts,
       model,
     });
 

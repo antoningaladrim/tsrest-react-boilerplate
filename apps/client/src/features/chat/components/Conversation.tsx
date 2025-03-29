@@ -1,27 +1,27 @@
-import { ChatCompletionMessage } from '@tsrest-react-boilerplate/api';
+import { Prompt } from '@tsrest-react-boilerplate/api';
 import { ChatbotResponse } from './ChatbotResponse';
-import { UserMessage } from './UserMessage';
+import { UserPrompt } from './UserPrompt';
 
 export const Conversation = ({
   description,
-  messages,
+  prompts,
   isPendingResponse,
 }: {
   description?: string;
   isPendingResponse: boolean;
-  messages?: readonly ChatCompletionMessage[];
+  prompts?: readonly Prompt[];
 }) => (
   <div className="flex-1 flex flex-col gap-6 overflow-y-scroll w-full">
     {description && (
       <h1 className="text-2xl font-semibold text-neutral-100">{description}</h1>
     )}
     <div className="flex-1 flex flex-col gap-6 w-full items-center">
-      {messages?.map((message, index) =>
-        message.role === 'user' ? (
-          <UserMessage key={index} content={message.content} />
+      {prompts?.map((prompt, index) =>
+        prompt.role === 'user' ? (
+          <UserPrompt key={index} content={prompt.content} />
         ) : (
-          message.role === 'assistant' && (
-            <ChatbotResponse key={index} content={message.content} />
+          prompt.role === 'assistant' && (
+            <ChatbotResponse key={index} content={prompt.content} />
           )
         )
       )}
