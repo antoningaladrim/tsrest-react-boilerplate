@@ -36,6 +36,7 @@
     "fastify-plugin": "~5.0.1",
     "mammoth": "^1.9.0",
     "minio": "^8.0.5",
+    "nanoid": "^5.1.5",
     "nunjucks": "^3.2.4",
     "openai": "^4.87.4",
     "pdf-to-png-converter": "^3.6.5",
