@@ -3,23 +3,18 @@ import { useMemo } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { paths } from '@/config/paths';
-import { ErrorBoundary, Home } from './routes/app';
 import LoginRoute from './routes/auth/Login';
-import LandingRoute from './routes/Landing';
+import { ErrorBoundary, Home } from './routes/chat';
 import NotFoundRoute from './routes/NotFound';
 
 export const createAppRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
     {
-      path: paths.home.path,
-      element: <LandingRoute />,
-    },
-    {
       path: paths.auth.login.path,
       element: <LoginRoute />,
     },
     {
-      path: paths.app.root.path,
+      path: paths.chat.path,
       element: <Home />,
       ErrorBoundary,
     },

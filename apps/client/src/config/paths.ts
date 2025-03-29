@@ -1,21 +1,14 @@
 export const paths = {
-  home: {
-    path: '/',
-    getHref: () => '/',
-  },
-
   auth: {
     login: {
-      path: '/auth/login',
+      path: '',
       getHref: (redirectTo?: string | null | undefined) =>
-        `/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+        redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : '',
     },
   },
 
-  app: {
-    root: {
-      path: '/app',
-      getHref: () => '/app',
-    },
+  chat: {
+    path: '/chat',
+    getHref: () => '/chat',
   },
 } as const;

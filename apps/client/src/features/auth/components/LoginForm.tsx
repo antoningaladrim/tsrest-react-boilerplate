@@ -24,12 +24,9 @@ export const LoginForm = ({ redirectTo }: { redirectTo: string | null }) => {
 
       if (signInAttempt.status === 'complete') {
         await setActive({ session: signInAttempt.createdSessionId });
-        return await navigate(
-          redirectTo ? redirectTo : paths.app.root.getHref(),
-          {
-            replace: true,
-          }
-        );
+        return await navigate(redirectTo ? redirectTo : paths.chat.getHref(), {
+          replace: true,
+        });
       }
       setError('root', {
         message: 'Une erreur est survenue lors de la connexion',
