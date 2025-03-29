@@ -1,6 +1,7 @@
 import {
   ChatCompletionMessage,
   ChatCompletionPayload,
+  CompletionResponse,
 } from '@tsrest-react-boilerplate/api';
 import { NotFoundError } from '@tsrest-react-boilerplate/api-errors';
 import { CompletionService } from '@tsrest-react-boilerplate/completion-client';
@@ -76,20 +77,21 @@ export class ConversationController {
       descriptionPromise,
     ]);
 
+    const conversationId = v4();
     await this.conversationRepository.store({
-      id: v4(),
+      id: conversationId,
       description: description.content,
-      messages: [systemPrompt],
+      messages: [systemPrompt, prompt, llmResponse],
     });
 
-    return llmResponse;
+    return { conversationId };
   }
 
   async sendMessage({
     message,
     model,
     conversationId,
-  }: ChatCompletionPayload): Promise<ChatCompletionMessage> {
+  }: ChatCompletionPayload): Promise<CompletionResponse> {
     if (conversationId === null) {
       return this.createFromPromptAndComplete({
         model,
@@ -109,6 +111,6 @@ export class ConversationController {
       messages: [...conversation.messages, message, llmResponse],
     });
 
-    return llmResponse;
+    return { conversationId: conversation.id };
   }
 }

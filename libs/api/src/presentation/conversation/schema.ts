@@ -17,6 +17,10 @@ export const zCompletionPayload = z.object({
   conversationId: z.string().uuid().nullable(),
 });
 
+export const zCompletionResponse = z.object({
+  conversationId: z.string().uuid(),
+});
+
 export const zFindAllConversationsResponseBody = zConversation
   .omit({
     messages: true,
@@ -27,3 +31,4 @@ export const zFindAllConversationsResponseBody = zConversation
 export type Conversation = z.infer<typeof zConversation>;
 export type ChatCompletionMessage = z.infer<typeof zMessage>;
 export type ChatCompletionPayload = z.infer<typeof zCompletionPayload>;
+export type CompletionResponse = z.infer<typeof zCompletionResponse>;

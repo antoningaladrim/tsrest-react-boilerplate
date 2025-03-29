@@ -6,9 +6,9 @@ import {
 } from '../errors';
 import {
   zCompletionPayload,
+  zCompletionResponse,
   zConversation,
   zFindAllConversationsResponseBody,
-  zMessage,
 } from './schema';
 
 const c = initContract();
@@ -40,7 +40,7 @@ export const ConversationRestApiContract = c.router(
       method: 'POST',
       path: '/send-message',
       responses: {
-        201: zMessage,
+        201: zCompletionResponse,
         401: UnauthorizedError,
         404: NotFoundError,
         500: InternalServiceError,

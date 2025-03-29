@@ -8,7 +8,8 @@ export const paths = {
   },
 
   chat: {
-    path: '/chat',
-    getHref: () => '/chat',
+    path: '/chat/:conversationId?',
+    getHref: (conversationId?: string) =>
+      `/chat${conversationId ? `/${conversationId}` : ''}`,
   },
 } as const;

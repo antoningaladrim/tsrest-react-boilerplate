@@ -7,8 +7,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import { MainErrorFallback } from '@/components/errors/main';
 import { Spinner } from '@/components/ui/spinner';
 import { env } from '@/config/env';
-import { tsr } from '@/lib/api-client';
-import { queryConfig } from '@/lib/react-query';
+import { tsr } from '@/lib/apiClient';
+import { queryConfig } from '@/lib/reactQuery';
 import { ClerkProvider } from '@clerk/clerk-react';
 
 type AppProviderProps = {
