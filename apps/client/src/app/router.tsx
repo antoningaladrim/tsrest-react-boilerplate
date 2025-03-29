@@ -6,6 +6,7 @@ import { paths } from '@/config/paths';
 import LoginRoute from './routes/auth/Login';
 import { ErrorBoundary, Home } from './routes/chat';
 import NotFoundRoute from './routes/NotFound';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 
 export const createAppRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
@@ -15,7 +16,11 @@ export const createAppRouter = (queryClient: QueryClient) =>
     },
     {
       path: paths.chat.path,
-      element: <Home />,
+      element: (
+        <ProtectedRoute>
+          <Home />
+        </ProtectedRoute>
+      ),
       ErrorBoundary,
     },
     {

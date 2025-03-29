@@ -47,7 +47,7 @@ const links = [
   },
 ] as const;
 
-export function ChatLayout({ children }: { children: ReactNode }) {
+export const ChatLayout = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
 
   const { signOut } = useClerk();
@@ -57,38 +57,40 @@ export function ChatLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="flex w-screen h-screen flex-col overflow-hidden border-neutral-200 bg-gray-100 md:flex-row dark:border-neutral-700 dark:bg-neutral-800">
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
-            {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
-              ))}
+    <main className="relative w-screen h-screen overflow-hidden border-neutral-200 bg-gray-100 md:flex-row dark:border-neutral-700 dark:bg-neutral-800">
+      <div className="flex h-full w-full">
+        <Sidebar open={open} setOpen={setOpen}>
+          <SidebarBody className="justify-between gap-10">
+            <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
+              {open ? <AdalyLogo /> : <AdalyLogoIcon />}
+              <div className="mt-8 flex flex-col gap-2">
+                {links.map((link, idx) => (
+                  <SidebarLink key={idx} link={link} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <SidebarLink
-              link={{
-                type: 'button',
-                label: 'Logout',
-                onClick: onSignOut,
-                icon: (
-                  <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-                ),
-              }}
-            />
-          </div>
-        </SidebarBody>
-      </Sidebar>
+            <div>
+              <SidebarLink
+                link={{
+                  type: 'button',
+                  label: 'Logout',
+                  onClick: onSignOut,
+                  icon: (
+                    <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+                  ),
+                }}
+              />
+            </div>
+          </SidebarBody>
+        </Sidebar>
 
-      {children}
-    </div>
+        {children}
+      </div>
+    </main>
   );
-}
+};
 
-export const Logo = () => {
+export const AdalyLogo = () => {
   return (
     <Link
       to="https://galadrim.fr/offres/intelligence-artificielle/"
@@ -106,7 +108,7 @@ export const Logo = () => {
   );
 };
 
-export const LogoIcon = () => {
+export const AdalyLogoIcon = () => {
   return (
     <Link
       to="#"

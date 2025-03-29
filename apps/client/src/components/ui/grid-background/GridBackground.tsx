@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 export const GridBackground = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="relative h-screen w-screen flex items-center justify-center bg-white dark:bg-black">
+    <main className="relative h-screen w-screen flex items-center justify-center bg-white dark:bg-black">
       <div
         className={cn(
           'absolute inset-0',
@@ -15,6 +15,6 @@ export const GridBackground = ({ children }: { children: ReactNode }) => {
       {/* Radial gradient for the container to give a faded look */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
       {children}
-    </div>
+    </main>
   );
 };
