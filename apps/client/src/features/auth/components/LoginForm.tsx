@@ -37,7 +37,10 @@ export const LoginForm = ({ redirectTo }: { redirectTo: string | null }) => {
   };
 
   return (
-    <div className="flex flex-col gap-1 bg-transparent">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-1 bg-transparent"
+    >
       <TextField label="Username" name="username" control={control} />
       <TextField
         label="Password"
@@ -46,7 +49,7 @@ export const LoginForm = ({ redirectTo }: { redirectTo: string | null }) => {
         type="password"
       />
       <Link to="/">Do not have an account?</Link>
-      <Button onClick={handleSubmit(onSubmit)}>Log in</Button>
-    </div>
+      <Button type="submit">Log in</Button>
+    </form>
   );
 };
