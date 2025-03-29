@@ -7,7 +7,6 @@ export const zMessage = z.object({
 
 export const zConversation = z.object({
   id: z.string().uuid(),
-  model: z.string(),
   description: z.string().optional(),
   messages: zMessage.array().readonly(),
 });
@@ -17,6 +16,13 @@ export const zCompletionPayload = z.object({
   message: zMessage,
   conversationId: z.string().uuid().nullable(),
 });
+
+export const zFindAllConversationsResponseBody = zConversation
+  .omit({
+    messages: true,
+  })
+  .array()
+  .readonly();
 
 export type Conversation = z.infer<typeof zConversation>;
 export type ChatCompletionMessage = z.infer<typeof zMessage>;

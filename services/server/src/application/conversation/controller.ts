@@ -78,7 +78,6 @@ export class ConversationController {
 
     await this.conversationRepository.store({
       id: v4(),
-      model,
       description: description.content,
       messages: [systemPrompt],
     });

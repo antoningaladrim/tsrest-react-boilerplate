@@ -4,7 +4,12 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from '../errors';
-import { zCompletionPayload, zConversation, zMessage } from './schema';
+import {
+  zCompletionPayload,
+  zConversation,
+  zFindAllConversationsResponseBody,
+  zMessage,
+} from './schema';
 
 const c = initContract();
 
@@ -14,7 +19,7 @@ export const ConversationRestApiContract = c.router(
       method: 'GET',
       path: '',
       responses: {
-        200: zConversation.array().readonly(),
+        200: zFindAllConversationsResponseBody,
         401: UnauthorizedError,
         500: InternalServiceError,
       },
