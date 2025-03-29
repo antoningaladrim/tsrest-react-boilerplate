@@ -6,7 +6,7 @@ const c = initContract();
 
 export const MessagesRestApiContract = c.router(
   {
-    completion: {
+    send: {
       method: 'POST',
       path: '/send',
       responses: {

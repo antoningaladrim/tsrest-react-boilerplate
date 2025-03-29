@@ -17,12 +17,16 @@
     "strict": true,
     "paths": {
       "@tsrest-react-boilerplate/api": ["libs/api/src/index.ts"],
+      "@tsrest-react-boilerplate/api-errors": ["libs/api-errors/src/index.ts"],
+      "@tsrest-react-boilerplate/completion-client": [
+        "libs/completion-client/src/index.ts"
+      ],
+      "@tsrest-react-boilerplate/scan-client": [
+        "libs/scan-client/src/index.ts"
+      ],
       "@tsrest-react-boilerplate/storage-client": [
         "libs/storage-client/src/index.ts"
-      ],
-      "@tsrest-react-boilerplate/api-errors": ["libs/api-errors/src/index.ts"],
-      "@tsrest-react-boilerplate/scan-client": ["libs/scan-client/src/index.ts"],
-      "@tsrest-react-boilerplate/completion-client": ["libs/completion-client/src/index.ts"]
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
