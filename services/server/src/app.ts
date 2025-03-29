@@ -13,7 +13,7 @@ import {
 
 const openApiDocument = generateOpenApi(apiRestContract, {
   info: {
-    title: 'Acme API',
+    title: 'Adaly chat API',
     version: '1.0.0',
   },
 });
