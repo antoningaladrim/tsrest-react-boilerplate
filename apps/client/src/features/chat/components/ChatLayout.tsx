@@ -1,60 +1,22 @@
 import LogoAdaly from '@/assets/logo-adaly.png';
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/sidebar';
 import { paths } from '@/config/paths';
+import { tsr } from '@/lib/apiClient';
+import { queryKeys } from '@/lib/queryKeys';
 import { useClerk } from '@clerk/clerk-react';
-import {
-  IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-  IconUserBolt,
-} from '@tabler/icons-react';
+import { IconLogout, IconMessage } from '@tabler/icons-react';
 import { motion } from 'motion/react';
 import { ReactNode, useState } from 'react';
 import { Link } from 'react-router';
 
-const links = [
-  {
-    type: 'link',
-    label: 'Dashboard',
-    to: '#',
-    icon: (
-      <IconBrandTabler className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-  {
-    type: 'link',
-    label: 'Profile',
-    to: '#',
-    icon: (
-      <IconUserBolt className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-  {
-    type: 'link',
-    label: 'Settings',
-    to: '#',
-    icon: (
-      <IconSettings className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-  {
-    type: 'link',
-    label: 'Logout',
-    to: '#',
-    icon: (
-      <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-] as const;
-
 export const ChatLayout = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
 
-  const { signOut } = useClerk();
+  const { data } = tsr.conversation.findAll.useQuery({
+    queryKey: queryKeys.conversation.list(),
+  });
 
-  const onSignOut = () => {
-    signOut({ redirectUrl: paths.auth.login.getHref() });
-  };
+  const conversations = data?.body ?? [];
 
   return (
     <main className="relative w-screen h-screen overflow-hidden border-neutral-200 bg-gray-100 md:flex-row dark:border-neutral-700 dark:bg-neutral-800">
@@ -63,24 +25,26 @@ export const ChatLayout = ({ children }: { children: ReactNode }) => {
           <SidebarBody className="justify-between gap-10">
             <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
               {open ? <AdalyLogo /> : <AdalyLogoIcon />}
-              <div className="mt-8 flex flex-col gap-2">
-                {links.map((link, idx) => (
-                  <SidebarLink key={idx} link={link} />
-                ))}
-              </div>
+              {conversations && (
+                <div className="mt-8 flex flex-col gap-2">
+                  {conversations.map((conversation, idx) => (
+                    <SidebarLink
+                      key={idx}
+                      link={{
+                        type: 'link',
+                        label:
+                          conversation.description ?? `Conversation ${idx + 1}`,
+                        to: paths.chat.getHref(conversation.id),
+                        icon: (
+                          <IconMessage className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+                        ),
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
-            <div>
-              <SidebarLink
-                link={{
-                  type: 'button',
-                  label: 'Logout',
-                  onClick: onSignOut,
-                  icon: (
-                    <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-                  ),
-                }}
-              />
-            </div>
+            <SignoutButton />
           </SidebarBody>
         </Sidebar>
 
@@ -90,7 +54,7 @@ export const ChatLayout = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const AdalyLogo = () => {
+const AdalyLogo = () => {
   return (
     <Link
       to="https://galadrim.fr/offres/intelligence-artificielle/"
@@ -108,7 +72,7 @@ export const AdalyLogo = () => {
   );
 };
 
-export const AdalyLogoIcon = () => {
+const AdalyLogoIcon = () => {
   return (
     <Link
       to="#"
@@ -116,5 +80,28 @@ export const AdalyLogoIcon = () => {
     >
       <img src={LogoAdaly} alt="Logo Adaly" height={20} width={20} />
     </Link>
+  );
+};
+
+const SignoutButton = () => {
+  const { signOut } = useClerk();
+
+  const onSignOut = () => {
+    signOut({ redirectUrl: paths.auth.login.getHref() });
+  };
+
+  return (
+    <div>
+      <SidebarLink
+        link={{
+          type: 'button',
+          label: 'Logout',
+          onClick: onSignOut,
+          icon: (
+            <IconLogout className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+          ),
+        }}
+      />
+    </div>
   );
 };

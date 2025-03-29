@@ -1,5 +1,6 @@
 import { FlipWords } from '@/components/ui/flip-words';
 import { Spotlight } from '@/components/ui/spotlight';
+import { paths } from '@/config/paths';
 import { tsr } from '@/lib/apiClient';
 import { queryKeys } from '@/lib/queryKeys';
 import { useQueryClient } from '@tanstack/react-query';
@@ -7,7 +8,6 @@ import { ChatCompletionMessage } from '@tsrest-react-boilerplate/api';
 import { useNavigate, useParams } from 'react-router';
 import { Conversation } from './Conversation';
 import { MessageInput } from './MessageInput';
-import { paths } from '@/config/paths';
 
 const MODEL = 'llama3.2';
 
@@ -36,11 +36,18 @@ export const Chat = () => {
   const onSendChat = async (userMessage: ChatCompletionMessage) => {
     await askMentor(
       {
-        body: { message: userMessage, model: MODEL, conversationId: null },
+        body: {
+          message: userMessage,
+          model: MODEL,
+          conversationId: conversationId ?? null,
+        },
       },
       {
         onSuccess: ({ body }) => {
           if (conversationId === undefined) {
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.conversation.list(),
+            });
             navigate(paths.chat.getHref(body.conversationId), {
               replace: true,
             });

@@ -21,7 +21,7 @@ export const MessageInput = ({
   };
 
   return (
-    <form onSubmit={onSubmit} className="w-full">
+    <form onSubmit={onSubmit} className="w-full mt-4">
       <input
         name="prompt"
         value={input}
