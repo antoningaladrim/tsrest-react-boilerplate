@@ -22,10 +22,10 @@ export const TextField = <Schema extends FieldValues>({
   <Controller
     {...props}
     render={({ field, fieldState: { error } }) => (
-      <div className="flex flex-col gap-2">
-        <p className="text-sm text-gray-500">{label}</p>
+      <div className="flex flex-col gap-1">
+        <p className="text-sm text-gray-400">{label}</p>
         <Input {...field} type={type} placeholder={placeholder} />
-        {error && <p className="text-red-50ﬂ0">{error.message}</p>}
+        {error && <p className="text-red-500">{error.message}</p>}
       </div>
     )}
   />

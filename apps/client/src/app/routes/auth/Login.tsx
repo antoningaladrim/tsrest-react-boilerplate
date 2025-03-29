@@ -8,7 +8,7 @@ const LoginRoute = () => {
   const redirectTo = searchParams.get('redirectTo');
 
   return (
-    <AuthLayout title="Log in to your account">
+    <AuthLayout title="Welcome to Acme chat" subTitle="Login to your account">
       <LoginForm redirectTo={redirectTo} />
     </AuthLayout>
   );

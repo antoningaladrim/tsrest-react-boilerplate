@@ -5,13 +5,15 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { Head } from '@/components/seo';
 import { paths } from '@/config/paths';
 import { useAuth } from '@clerk/clerk-react';
+import { GridBackground } from '../ui/grid-background';
 
 type LayoutProps = {
   children: React.ReactNode;
   title: string;
+  subTitle: string;
 };
 
-export const AuthLayout = ({ children, title }: LayoutProps) => {
+export const AuthLayout = ({ children, title, subTitle }: LayoutProps) => {
   const { isSignedIn } = useAuth();
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get('redirectTo');
@@ -27,21 +29,18 @@ export const AuthLayout = ({ children, title }: LayoutProps) => {
   }, [isSignedIn, navigate, redirectTo]);
 
   return (
-    <>
+    <GridBackground>
       <Head title={title} />
-      <div className="flex min-h-screen flex-col justify-center bg-gray-50 py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-3 text-center text-3xl font-extrabold text-gray-900">
+      <div className="flex min-h-screen flex-col justify-center z-10">
+        <div className="flex flex-col gap-2 sm:mx-auto sm:w-full sm:max-w-md">
+          <h2 className="mt-3 text-center text-3xl text-gray-50 font-extrabold">
             {title}
           </h2>
+          <p className="text-gray-300">{subTitle}</p>
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-            {children}
-          </div>
-        </div>
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">{children}</div>
       </div>
-    </>
+    </GridBackground>
   );
 };
