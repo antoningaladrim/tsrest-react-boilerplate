@@ -36,7 +36,6 @@ export const ChatRoute = () => {
 
   const {
     mutateAsync: prompt,
-    error,
     isPending,
     variables,
   } = tsr.conversation.prompt.useMutation();
