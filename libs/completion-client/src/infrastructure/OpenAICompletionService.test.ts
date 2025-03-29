@@ -10,4 +10,9 @@ describe('LiteLLMCompletionService', () => {
     });
     expect(result).toBeDefined();
   }, 10000);
+
+  it('should be able to list available models', async () => {
+    const result = await completionService.getModels();
+    expect(result).toBeDefined();
+  });
 });

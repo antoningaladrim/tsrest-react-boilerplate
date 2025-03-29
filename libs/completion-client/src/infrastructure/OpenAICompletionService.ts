@@ -1,4 +1,4 @@
-import { Prompt } from '@tsrest-react-boilerplate/api';
+import { Model, Prompt } from '@tsrest-react-boilerplate/api';
 import { InternalServerError } from '@tsrest-react-boilerplate/api-errors';
 import OpenAI from 'openai';
 import { CompletionService } from '../domain';
@@ -9,6 +9,11 @@ export class OpenAICompletionService implements CompletionService {
   constructor() {
     this.client = new OpenAI();
   }
+
+  getModels = async (): Promise<Model[]> => {
+    const models = await this.client.models.list();
+    return models.data;
+  };
 
   complete = async ({
     prompts,
