@@ -14,11 +14,7 @@ export const zConversation = z.object({
 export const zCompletionPayload = z.object({
   model: z.string(),
   prompt: zPrompt,
-  conversationId: z.string().uuid().nullable(),
-});
-
-export const zCompletionResponse = z.object({
-  conversationId: z.string().uuid(),
+  conversationId: z.string().uuid().optional(),
 });
 
 export const zFindAllConversationsResponseBody = zConversation
@@ -27,6 +23,11 @@ export const zFindAllConversationsResponseBody = zConversation
   })
   .array()
   .readonly();
+
+export const zCompletionResponse = z.object({
+  conversationId: z.string().uuid(),
+  response: zPrompt,
+});
 
 export type Conversation = z.infer<typeof zConversation>;
 export type Prompt = z.infer<typeof zPrompt>;

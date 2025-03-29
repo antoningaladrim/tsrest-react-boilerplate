@@ -3,7 +3,7 @@ import { paths } from '@/config/paths';
 import { useClerk } from '@clerk/clerk-react';
 import { IconLogout } from '@tabler/icons-react';
 
-export const SidebarSignoutButton = () => {
+export const SignoutButton = () => {
   const { signOut } = useClerk();
 
   const onSignOut = () => {

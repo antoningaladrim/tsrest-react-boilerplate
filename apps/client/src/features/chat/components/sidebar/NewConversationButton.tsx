@@ -2,10 +2,10 @@ import { SidebarLink } from '@/components/ui/sidebar';
 import { paths } from '@/config/paths';
 import { IconPlus } from '@tabler/icons-react';
 
-export const SidebarNewConversationButton = () => (
+export const NewConversationButton = () => (
   <SidebarLink
     link={{
-      to: paths.chat.getHref(),
+      to: paths.chatLayout.getHref(),
       type: 'link',
       label: 'New conversation',
       icon: (

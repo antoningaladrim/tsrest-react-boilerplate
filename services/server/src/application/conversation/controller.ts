@@ -66,19 +66,20 @@ export class ConversationController {
       prompt,
     });
 
+    const conversationId = v4();
+
     const [llmResponse, description] = await Promise.all([
       completionPromise,
       descriptionPromise,
     ]);
 
-    const conversationId = v4();
     await this.conversationRepository.store({
       id: conversationId,
       description: description.content,
       prompts: [systemPrompt, prompt, llmResponse],
     });
 
-    return { conversationId };
+    return { conversationId, response: llmResponse };
   }
 
   async prompt({
@@ -86,7 +87,7 @@ export class ConversationController {
     model,
     conversationId,
   }: ChatCompletionPayload): Promise<CompletionResponse> {
-    if (conversationId === null) {
+    if (conversationId === undefined) {
       return this.createFromPromptAndComplete({
         model,
         prompt,
@@ -105,6 +106,6 @@ export class ConversationController {
       prompts: [...conversation.prompts, prompt, llmResponse],
     });
 
-    return { conversationId: conversation.id };
+    return { conversationId: conversation.id, response: llmResponse };
   }
 }

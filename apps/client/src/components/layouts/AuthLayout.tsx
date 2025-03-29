@@ -22,7 +22,7 @@ export const AuthLayout = ({ children, title, subTitle }: LayoutProps) => {
 
   useEffect(() => {
     if (isSignedIn) {
-      navigate(redirectTo ? redirectTo : paths.chat.getHref(), {
+      navigate(redirectTo ? redirectTo : paths.chatLayout.getHref(), {
         replace: true,
       });
     }

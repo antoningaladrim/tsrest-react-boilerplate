@@ -7,6 +7,11 @@ export const paths = {
     },
   },
 
+  chatLayout: {
+    path: '/chat',
+    getHref: () => '/chat',
+  },
+
   chat: {
     path: '/chat/:conversationId?',
     getHref: (conversationId?: string) =>

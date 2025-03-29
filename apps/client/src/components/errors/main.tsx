@@ -1,5 +1,3 @@
-import { Button } from '../ui/button';
-
 export const MainErrorFallback = () => {
   return (
     <div
@@ -7,12 +5,12 @@ export const MainErrorFallback = () => {
       role="alert"
     >
       <h2 className="text-lg font-semibold">Ooops, something went wrong :( </h2>
-      <Button
-        className="mt-4"
+      <button
+        className="mt-4 bg-red-50 p-2 rounded-md hover:bg-red-100"
         onClick={() => window.location.assign(window.location.origin)}
       >
         Refresh
-      </Button>
+      </button>
     </div>
   );
 };

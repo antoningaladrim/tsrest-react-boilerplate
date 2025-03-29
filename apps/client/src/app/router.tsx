@@ -4,9 +4,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { paths } from '@/config/paths';
 import LoginRoute from './routes/auth/Login';
-import { ErrorBoundary, Home } from './routes/chat';
+import { ChatRoute } from './routes/chat/Chat';
+import { ChatLayoutRoute } from './routes/chat/layout';
 import NotFoundRoute from './routes/NotFound';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
+
+const ErrorBoundary = () => {
+  return <div>Something went wrong!</div>;
+};
 
 export const createAppRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
@@ -15,13 +19,16 @@ export const createAppRouter = (queryClient: QueryClient) =>
       element: <LoginRoute />,
     },
     {
-      path: paths.chat.path,
-      element: (
-        <ProtectedRoute>
-          <Home />
-        </ProtectedRoute>
-      ),
-      ErrorBoundary,
+      path: paths.chatLayout.path,
+      element: <ChatLayoutRoute />,
+      children: [
+        {
+          path: paths.chat.path,
+          element: <ChatRoute />,
+          errorElement: <ErrorBoundary />,
+        },
+      ],
+      errorElement: <ErrorBoundary />,
     },
     {
       path: '*',

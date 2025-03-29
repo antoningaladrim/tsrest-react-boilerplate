@@ -46,8 +46,7 @@ export const ConversationRestApiContract = c.router(
         500: InternalServiceError,
       },
       body: zCompletionPayload,
-      summary:
-        'Send a prompt in a conversation. If conversationId is null, the conversation will be created',
+      summary: 'Send a prompt in a conversation',
     },
   },
   {

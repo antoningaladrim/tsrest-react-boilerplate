@@ -7,14 +7,13 @@ export const Conversation = ({
   prompts,
   isPendingResponse,
 }: {
-  description?: string;
+  description: string;
   isPendingResponse: boolean;
   prompts?: readonly Prompt[];
 }) => (
   <div className="flex-1 flex flex-col gap-6 overflow-y-scroll w-full">
-    {description && (
-      <h1 className="text-2xl font-semibold text-neutral-100">{description}</h1>
-    )}
+    <h1 className="text-2xl font-semibold text-neutral-100">{description}</h1>
+
     <div className="flex-1 flex flex-col gap-6 w-full items-center">
       {prompts?.map((prompt, index) =>
         prompt.role === 'user' ? (

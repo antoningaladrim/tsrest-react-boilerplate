@@ -6,8 +6,8 @@ import {
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { SidebarConversations } from './SidebarConversations';
-import { SidebarSignoutButton } from './SidebarSignoutButton';
+import { Conversations } from './Conversations';
+import { SignoutButton } from './SignoutButton';
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(false);
@@ -17,9 +17,9 @@ export const Sidebar = () => {
       <SidebarBody className="justify-between gap-10">
         <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto gap-8">
           {open ? <AdalyLogo /> : <AdalyLogoIcon />}
-          <SidebarConversations />
+          <Conversations />
         </div>
-        <SidebarSignoutButton />
+        <SignoutButton />
       </SidebarBody>
     </AceternitySidebar>
   );
@@ -29,7 +29,7 @@ const AdalyLogo = () => {
   return (
     <Link
       to="https://galadrim.fr/offres/intelligence-artificielle/"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
+      className="relative z-20 flex items-center space-x-2 py-1 font-normal text-black"
     >
       <img src={LogoAdaly} alt="Logo Adaly" height={20} width={20} />
       <motion.span
@@ -47,7 +47,7 @@ const AdalyLogoIcon = () => {
   return (
     <Link
       to="#"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
+      className="relative z-20 flex items-center space-x-2 py-1 font-normal text-black"
     >
       <img src={LogoAdaly} alt="Logo Adaly" height={20} width={20} />
     </Link>

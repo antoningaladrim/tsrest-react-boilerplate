@@ -3,20 +3,20 @@ import { paths } from '@/config/paths';
 import { tsr } from '@/lib/apiClient';
 import { queryKeys } from '@/lib/queryKeys';
 import { IconMessage } from '@tabler/icons-react';
-import { SidebarNewConversationButton } from './SidebarNewConversationButton';
+import { NewConversationButton } from './NewConversationButton';
 
-export const SidebarConversations = () => {
+export const Conversations = () => {
   const { data } = tsr.conversation.findAll.useQuery({
     queryKey: queryKeys.conversation.list(),
   });
 
-  if (!data?.body) return <SidebarNewConversationButton />;
+  if (!data?.body) return <NewConversationButton />;
 
   const conversations = data.body;
 
   return (
     <div className="flex flex-col gap-2">
-      <SidebarNewConversationButton />
+      <NewConversationButton />
       {conversations.map((conversation, idx) => (
         <SidebarLink
           key={idx}

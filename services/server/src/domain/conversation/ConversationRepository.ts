@@ -3,7 +3,7 @@ import { Conversation } from '@tsrest-react-boilerplate/api';
 export interface ConversationRepository {
   findAll(): Promise<readonly Conversation[]>;
   findById(id: string): Promise<Conversation | null>;
-  store(conversation: Conversation): Promise<void>;
+  store(conversation: Conversation): Promise<Conversation>;
 }
 
 export class InMemoryConversationRepository implements ConversationRepository {
@@ -17,7 +17,8 @@ export class InMemoryConversationRepository implements ConversationRepository {
     return this.conversations.get(id) || null;
   }
 
-  async store(conversation: Conversation): Promise<void> {
+  async store(conversation: Conversation): Promise<Conversation> {
     this.conversations.set(conversation.id, conversation);
+    return conversation;
   }
 }
