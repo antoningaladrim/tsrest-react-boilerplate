@@ -4,7 +4,7 @@ import fastifySwaggerUI from '@fastify/swagger-ui';
 import { generateOpenApi } from '@ts-rest/open-api';
 import { apiRestContract } from '@tsrest-react-boilerplate/api';
 import Fastify from 'fastify';
-import { addMessagesRouter } from './presentation';
+import { addConversationRouter } from './presentation';
 import {
   globalErrorHandler,
   protectedRouteHandler,
@@ -34,7 +34,7 @@ app.get('/healthz', (_, res) => {
   res.send({ status: 'ok' });
 });
 
-addMessagesRouter(app);
+addConversationRouter(app);
 
 app.addHook('preHandler', protectedRouteHandler);
 app.setNotFoundHandler(routeNotFoundHandler);

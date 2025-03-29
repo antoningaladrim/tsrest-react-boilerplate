@@ -14,3 +14,8 @@ export const BadRequestError = z.object({
   reason: z.string(),
   type: z.literal('BadRequestError'),
 });
+
+export const NotFoundError = z.object({
+  reason: z.string(),
+  type: z.literal('NotFoundError'),
+});

@@ -7,8 +7,10 @@ export const protectedRouteHandler: preHandlerHookHandler = async (
 ) => {
   const { sessionId } = getAuth(request);
 
+  const isDocumentationPath = request.url.startsWith('/docs');
+
   // Protect the route from unauthenticated users
-  if (!sessionId) {
+  if (!sessionId && !isDocumentationPath) {
     return reply
       .code(401)
       .send({ message: 'Access denied. Authentication required.' });

@@ -20,7 +20,7 @@
           "services/server/src/assets",
           {
             "input": "./services/server/src/application",
-            "glob": "**/*.html",
+            "glob": "**/*.prompt.html",
             "output": "./services/server/src/prompts"
           }
         ],

@@ -1,14 +1,23 @@
 import { getCompletionClientLive } from '@tsrest-react-boilerplate/completion-client';
 import { Environment, FileSystemLoader } from 'nunjucks';
 import path from 'path';
-import { MessagesController } from './application';
+import { ConversationController } from './application';
+import { getConversationRepositoryLive } from './repositoriesLive';
 
 export const getMessagesControllerLive = () => {
   const CompletionService = getCompletionClientLive();
 
   const env = new Environment(
-    new FileSystemLoader(path.join(__dirname, 'prompts'))
+    new FileSystemLoader(
+      path.join(__dirname, 'prompts', 'conversation', 'prompts')
+    )
   );
 
-  return new MessagesController(CompletionService, env);
+  const conversationRepository = getConversationRepositoryLive();
+
+  return new ConversationController(
+    conversationRepository,
+    CompletionService,
+    env
+  );
 };

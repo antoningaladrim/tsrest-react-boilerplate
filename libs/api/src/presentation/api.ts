@@ -1,8 +1,8 @@
 import { initContract } from '@ts-rest/core';
-import { MessagesRestApiContract } from './messages';
+import { ConversationRestApiContract } from './conversation';
 
 const c = initContract();
 
 export const apiRestContract = c.router({
-  messages: MessagesRestApiContract,
+  conversation: ConversationRestApiContract,
 });

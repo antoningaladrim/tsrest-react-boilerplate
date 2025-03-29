@@ -1,8 +1,8 @@
-import {
-  ChatCompletionMessage,
-  ChatCompletionPayload,
-} from '@tsrest-react-boilerplate/api';
+import { ChatCompletionMessage } from '@tsrest-react-boilerplate/api';
 
 export interface CompletionService {
-  complete(payload: ChatCompletionPayload): Promise<ChatCompletionMessage>;
+  complete(props: {
+    messages: ChatCompletionMessage[];
+    model: string;
+  }): Promise<ChatCompletionMessage>;
 }

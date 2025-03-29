@@ -1,9 +1,9 @@
 export const paths = {
   auth: {
     login: {
-      path: '',
+      path: '/',
       getHref: (redirectTo?: string | null | undefined) =>
-        redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : '',
+        redirectTo ? `/?redirectTo=${encodeURIComponent(redirectTo)}` : '',
     },
   },
 
