@@ -1,47 +1,38 @@
+import {
+  ChatCompletionMessage,
+  ChatCompletionPayload,
+} from '@tsrest-react-boilerplate/api';
 import { InternalServerError } from '@tsrest-react-boilerplate/api-errors';
 import OpenAI from 'openai';
-import { zodResponseFormat } from 'openai/helpers/zod';
-import { z } from 'zod';
 import { CompletionService } from '../domain';
 
-const zCountry = z.object({
-  country: z.string(),
-});
-type Country = z.infer<typeof zCountry>;
-
-export class OpenAICompletionService implements CompletionService<Country> {
+export class OpenAICompletionService implements CompletionService {
   client: OpenAI;
 
   constructor() {
     this.client = new OpenAI();
   }
 
-  complete = async (text: string): Promise<Country> => {
-    const chatCompletion = await this.client.beta.chat.completions.parse({
-      messages: [
-        {
-          role: 'system',
-          content:
-            'You are an expert at locating cities.' +
-            'You will be given a city and you should return the country it belongs to.',
-        },
-        {
-          role: 'user',
-          content: text,
-        },
-      ],
-      model: 'gpt-4o-2024-08-06',
-      response_format: zodResponseFormat(zCountry, 'country'),
+  complete = async ({
+    model,
+    messages,
+  }: ChatCompletionPayload): Promise<ChatCompletionMessage> => {
+    const chatCompletion = await this.client.chat.completions.create({
+      messages,
+      model,
     });
 
-    const completionResult = chatCompletion.choices[0].message.parsed;
+    const completionResult = chatCompletion.choices[0].message;
 
-    if (completionResult === null) {
+    if (completionResult.content === null) {
       throw InternalServerError(
-        chatCompletion.choices[0].message.refusal ?? 'Failed to locate city'
+        completionResult.refusal ?? 'Failed to complete the request'
       );
     }
 
-    return completionResult;
+    return {
+      role: completionResult.role,
+      content: completionResult.content,
+    };
   };
 }

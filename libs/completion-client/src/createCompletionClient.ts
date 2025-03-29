@@ -1,8 +1,5 @@
 import { ConfigError } from '@tsrest-react-boilerplate/api-errors';
-import {
-  LiteLLMCompletionService,
-  OpenAICompletionService,
-} from './infrastructure';
+import { OpenAICompletionService } from './infrastructure';
 
 export const createOpenAICompletionClient = () => {
   if (process.env['OPENAI_API_KEY'] === undefined) {
@@ -20,5 +17,5 @@ export const createLiteLLMCompletionClient = () => {
   if (process.env['OPENAI_BASE_URL'] === undefined) {
     throw ConfigError('OPENAI_BASE_URL is not set');
   }
-  return new LiteLLMCompletionService();
+  return new OpenAICompletionService();
 };

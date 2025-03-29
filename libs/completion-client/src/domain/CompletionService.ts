@@ -1,3 +1,8 @@
-export interface CompletionService<T extends object> {
-  complete(text: string): Promise<T>;
+import {
+  ChatCompletionMessage,
+  ChatCompletionPayload,
+} from '@tsrest-react-boilerplate/api';
+
+export interface CompletionService {
+  complete(payload: ChatCompletionPayload): Promise<ChatCompletionMessage>;
 }
