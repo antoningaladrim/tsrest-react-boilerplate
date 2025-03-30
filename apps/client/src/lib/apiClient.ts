@@ -5,7 +5,6 @@ import { initTsrReactQuery } from '@ts-rest/react-query/v5';
 import { apiRestContract } from '@tsrest-react-boilerplate/api';
 
 const clerk = new Clerk(env.CLERK_PUBLISHABLE_KEY);
-const clerkLoadPromise = clerk.load();
 
 export const tsr = initTsrReactQuery(apiRestContract, {
   baseUrl: 'http://localhost:8000',
@@ -15,7 +14,7 @@ export const tsr = initTsrReactQuery(apiRestContract, {
   },
 
   api: async (args) => {
-    await clerkLoadPromise;
+    await clerk.load();
     const token = await clerk.session?.getToken();
 
     args.headers = {
