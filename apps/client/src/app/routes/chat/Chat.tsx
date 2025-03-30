@@ -15,11 +15,10 @@ import {
 } from '@/features/chat/types';
 import { tsr } from '@/lib/apiClient';
 import { queryKeys } from '@/lib/queryKeys';
+import { useCompletionModel } from '@/stores';
 import { useQueryClient } from '@tanstack/react-query';
 import { Prompt } from '@tsrest-react-boilerplate/api';
 import { useNavigate, useParams } from 'react-router';
-
-const MODEL = 'llama3.2';
 
 export const ChatRoute = () => {
   const { conversationId } = useParams();
@@ -41,6 +40,11 @@ export const ChatRoute = () => {
   } = tsr.conversation.prompt.useMutation();
 
   const onPrompt = async (userPrompt: Prompt) => {
+    const model = useCompletionModel.getState().model;
+
+    // In this case a toast is sent from the Chat component
+    if (model === undefined) return;
+
     if (conversationId === undefined) {
       queryClient.setQueryData(
         queryKeys.conversation.list(),
@@ -55,7 +59,7 @@ export const ChatRoute = () => {
       {
         body: {
           prompt: userPrompt,
-          model: MODEL,
+          model,
           conversationId,
         },
       },
@@ -77,7 +81,11 @@ export const ChatRoute = () => {
                       ...prev,
                       body: {
                         ...prev.body,
-                        prompts: [...prev.body.prompts, result.body.response],
+                        prompts: [
+                          ...prev.body.prompts,
+                          userPrompt,
+                          result.body.response,
+                        ],
                       },
                     }
                   : result

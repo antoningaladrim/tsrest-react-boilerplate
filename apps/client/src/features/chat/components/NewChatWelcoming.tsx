@@ -1,6 +1,6 @@
 import { FlipWords } from '@/components/ui/flip-words';
 
-const words = ['quantum physics', 'sports', 'history', 'litterature'];
+const words = ['quantum physics', 'french history', 'litterature', 'rugby'];
 
 export const NewChatWelcoming = () => (
   <div className="flex-1 w-full flex items-center justify-center">

@@ -33,9 +33,7 @@ export const AuthLayout = ({ children, title, subTitle }: LayoutProps) => {
       <Head title={title} />
       <div className="flex min-h-screen flex-col justify-center z-10 gap-4">
         <div className="flex flex-col gap-2 sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="text-3xl text-gray-50 font-extrabold">
-            {title}
-          </h2>
+          <h2 className="text-3xl text-gray-50 font-extrabold">{title}</h2>
           <p className="text-gray-300">{subTitle}</p>
         </div>
 

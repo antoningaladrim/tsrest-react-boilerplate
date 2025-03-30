@@ -1,5 +1,7 @@
+import { useCompletionModel } from '@/stores';
 import { Prompt } from '@tsrest-react-boilerplate/api';
 import { ChangeEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 
 export const PromptInput = ({
   onPrompt,
@@ -16,6 +18,17 @@ export const PromptInput = ({
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const model = useCompletionModel.getState().model;
+
+    if (model === undefined) {
+      toast.error('Please select a model', {
+        icon: '🤖',
+        style: { backgroundColor: '#18181b', color: '#e5e5e5' },
+      });
+      return;
+    }
+
     setInput('');
     onPrompt({ role: 'user', content: input });
   };

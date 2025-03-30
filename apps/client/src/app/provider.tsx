@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from 'react-hot-toast';
 
 import { MainErrorFallback } from '@/components/errors/main';
 import { Spinner } from '@/components/ui/spinner';
@@ -41,6 +42,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
               <tsr.ReactQueryProvider>
                 {import.meta.env.DEV && <ReactQueryDevtools />}
                 {children}
+                <Toaster />
               </tsr.ReactQueryProvider>
             </QueryClientProvider>
           </HelmetProvider>

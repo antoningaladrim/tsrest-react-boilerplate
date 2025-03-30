@@ -3,4 +3,7 @@ export const queryKeys = {
     list: () => ['conversation', 'list'],
     get: (conversationId: string) => ['conversation', conversationId],
   },
+  models: {
+    list: () => ['models', 'list'],
+  },
 };
