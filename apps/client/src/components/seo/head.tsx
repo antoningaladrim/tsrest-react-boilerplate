@@ -9,11 +9,7 @@ const helmetData = new HelmetData({});
 
 export const Head = ({ title = '', description = '' }: HeadProps = {}) => {
   return (
-    <Helmet
-      helmetData={helmetData}
-      title={title ? `${title} | Bulletproof React` : undefined}
-      defaultTitle="Bulletproof React"
-    >
+    <Helmet helmetData={helmetData} title={title} defaultTitle="Adaly Chat">
       <meta name="description" content={description} />
     </Helmet>
   );
