@@ -73,10 +73,13 @@ export class ConversationController {
       descriptionPromise,
     ]);
 
+    const now = new Date();
     await this.conversationRepository.store({
       id: conversationId,
       description: description.content,
       prompts: [systemPrompt, prompt, llmResponse],
+      createdAt: now,
+      updatedAt: now,
     });
 
     return { conversationId, response: llmResponse };
@@ -104,6 +107,7 @@ export class ConversationController {
     await this.conversationRepository.store({
       ...conversation,
       prompts: [...conversation.prompts, prompt, llmResponse],
+      updatedAt: new Date(),
     });
 
     return { conversationId: conversation.id, response: llmResponse };

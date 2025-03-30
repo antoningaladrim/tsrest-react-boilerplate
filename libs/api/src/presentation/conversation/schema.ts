@@ -9,6 +9,8 @@ export const zConversation = z.object({
   id: z.string().uuid(),
   description: z.string().optional(),
   prompts: zPrompt.array().readonly(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });
 
 export const zCompletionPayload = z.object({

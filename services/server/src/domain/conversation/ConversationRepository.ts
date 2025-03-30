@@ -10,7 +10,9 @@ export class InMemoryConversationRepository implements ConversationRepository {
   private conversations: Map<string, Conversation> = new Map();
 
   async findAll(): Promise<readonly Conversation[]> {
-    return Array.from(this.conversations.values());
+    return Array.from(this.conversations.values()).sort(
+      (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()
+    );
   }
 
   async findById(id: string): Promise<Conversation | null> {

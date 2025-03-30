@@ -50,7 +50,7 @@ export const ChatRoute = () => {
         queryKeys.conversation.list(),
         (prev: FindAllConversationQueryResult) =>
           prev
-            ? { ...prev, body: [...prev.body, placeholderConversation] }
+            ? { ...prev, body: [placeholderConversation, ...prev.body] }
             : placeholderQueryResponse
       );
     }
