@@ -26,6 +26,18 @@ This project is a monorepo generated using [Nx](https://nx.dev). It implements a
 
 ## Getting Started
 
+### Environment
+
+In order to run the project, you need to set up a Clerk account and a Clerk project. You can create an account for free.
+
+Except for the Clerk account, you don't need to set up any other environment variables, just copy/paste the `.env.example` file to `.env`.
+
+### LiteLLM
+
+The config file for LiteLLM is located in the `infra/litellm` folder and is an example of how to configure LiteLLM. The models will not be downloaded automatically, you need to download them manually.
+
+To do so, run `ollama pull <model_name>` in the ollama container and update the litellm config file with the model name.
+
 ### Installation
 
 1. Clone the repository
