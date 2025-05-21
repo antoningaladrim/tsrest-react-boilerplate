@@ -33,7 +33,7 @@
     "@ts-rest/fastify": "^3.52.0",
     "@ts-rest/open-api": "^3.52.1",
     "@ts-rest/react-query": "^3.52.0",
-    "axios": "^1.6.0",
+    "axios": "^1.8.2",
     "clsx": "^2.1.1",
     "fastify": "~5.2.1",
     "fastify-plugin": "~5.0.1",
